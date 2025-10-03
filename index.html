@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>カメラアプリ選択</title>
+</head>
+<body>
+    <h1>起動する機能を選択してください</h1>
+    <div style="display: flex; gap: 20px;">
+        
+        <a href="{{ url_for('style_score') }}" style="padding: 15px; border: 1px solid blue;">
+            <h2>👗 ファッション採点</h2>
+            <p>画像から服装を分析し、点数とアドバイスをもらいます。</p>
+        </a>
+
+        <a href="{{ url_for('privacy_guard') }}" style="padding: 15px; border: 1px solid green;">
+            <h2>👤 自動プライバシーガード</h2>
+            <p>背後に人が来たら、画面を自動で切り替えます。</p>
+        </a>
+
+    </div>
+</body>
+</html>
