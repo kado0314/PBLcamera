@@ -1,0 +1,14 @@
+<h1>ファッション採点アプリ</h1>
+<form method="POST" enctype="multipart/form-data">
+    <label for="image_input">画像をアップロードまたはカメラで撮影:</label><br>
+    <input type="file" id="image_input" name="image_file" accept="image/*" capture="camera"><br><br>
+    <button type="submit">採点する</button>
+</form>
+
+{% if score is not none %}
+    <h2>--- 採点結果 ---</h2>
+    <p>あなたの今日のファッションは **{{ score }} 点**です！</p>
+    <p>フィードバック: {{ feedback }}</p>
+    <h3>✨ おすすめ情報</h3>
+    <p>{{ recommendation }}</p>
+    {% endif %}
