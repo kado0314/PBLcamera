@@ -1,0 +1,196 @@
+/* ==============================
+   追加: ナビゲーションヘッダーのスタイル
+   ============================== */
+.main-header {
+    /* 画面最上部に固定 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    
+    /* 初期状態は背景色を透明に設定 */
+    background-color: transparent; 
+    
+    /* ★修正点1: 線の太さ(1px)は維持し、色を完全に透明に設定 (黒い線問題を解消) */
+    border-bottom: 1px solid transparent; 
+    
+    height: 80px; 
+    
+    /* ロゴを中央に寄せるためのFlexbox */
+    display: flex;
+    justify-content: center; /* 水平中央寄せ */
+    align-items: center;     /* 垂直中央寄せ */
+    
+    /* ★修正点2: border-bottom-colorのみを遷移対象に追加 */
+    transition: background-color 0.3s, border-bottom-color 0.3s; 
+    
+    /* Soéju風フォント */
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+}
+
+/* ホバー時に白色にするエフェクト */
+.main-header:hover {
+    background-color: #ffffff;
+    
+    /* ★修正点3: ホバー時に線の色だけを薄いグレーに変更 */
+    border-bottom-color: #f0f0f0;
+}
+
+.header-content {
+    /* HTMLのdiv要素は中央寄せのため、Flexboxを解除 */
+    display: block; 
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo {
+    /* ロゴの文字を調整 */
+    font-size: 1.8em; 
+    font-weight: bold;
+    letter-spacing: 0.15em; 
+    
+    /* ★初期状態の透明な背景で見えるように文字色を白に */
+    color: #ffffff; 
+    line-height: 60px; 
+    
+    /* グラデーションホバー時は白ではなく濃い色にするための設定 */
+    transition: color 0.3s;
+}
+
+/* ヘッダーホバー時にロゴの文字色を濃い色にするエフェクト */
+.main-header:hover .logo {
+    color: #333;
+}
+
+
+/* ==============================
+   全体レイアウト：中央配置
+   ============================== */
+body {
+    /* ページ全体で中央揃えを実現するための設定 */
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    min-height: 100vh; 
+    margin: 0; 
+    
+    /* ヘッダーの高さ分だけコンテンツを下にずらす */
+    padding-top: 60px; 
+    
+    /* Soéju風: フォントを明朝体（セリフ）に変更 */
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif; 
+    
+    /* ★修正点: 画像背景設定 */
+    background-image: url('p820.jpg'); /* 画像ファイルのパスを指定 */
+    background-size: cover;                        /* 画像が画面全体を覆うように設定 */
+    background-attachment: fixed;                  /* 画像がスクロールしても固定されるように設定 */
+    background-color: #f0f0f0;                      /* 画像が読み込まれない場合の代替背景色 */
+}
+
+h1 {
+    /* タイトル位置と間隔の調整 */
+    margin-top: 45px; /* ヘッダーのpadding-topを考慮した調整 */
+    margin-bottom: 80px; 
+    
+    /* タイトル文字色を白（#ffffff）に変更 */
+    color: #808080; 
+    
+    /* Soéju風: タイトルを大きく、フォントを細く */
+    font-size: 2.5em; 
+    font-weight: normal; 
+    letter-spacing: 0.05em; 
+}
+
+/* ==============================
+   aタグ（青・緑の枠線の親要素）のスタイル
+   ============================== */
+a {
+    /* Flexboxで中身（ボタンとpタグ）を中央揃えにする */
+    display: flex;
+    flex-direction: column; 
+    align-items: center;    
+    width: 390px; 
+    
+    /* HTMLのインラインスタイルにある枠線とパディングをそのまま利用 */
+    border-radius: 15px; 
+    box-shadow: none;
+    
+    background-color: rgba(255, 255, 255, 0.2); 
+
+    text-decoration: none; 
+    color: inherit; 
+}
+
+
+/* ==============================
+   ボタンのスタイル：大型化と統一
+   ============================== */
+a button {
+    /* サイズ設定 */
+    width: 360px; 
+    height: 80px; 
+    padding: 15px; 
+    
+    background-color: rgba(255, 255, 255, 0.8);; /* ボタンの背景を白に */
+
+    /* ボタン本体の枠線を濃いグレーに設定 */
+    border: 1px solid #ccc; 
+    
+    /* ボタンの角を丸くする */
+    border-radius: 8px;
+    
+    /* フォントスタイル */
+    font-size: 1.5em; 
+    font-weight: bold; 
+    letter-spacing: 0.03em;
+    color: #333; 
+
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.1s; 
+}
+
+/* ホバー時のエフェクト */
+a button:hover {
+    background-color: #f5f5f5; /* ボタンが薄くハイライトされる */
+}
+
+/* ボタンが押されたとき（アクティブ時）に影を表示 */
+a button:active {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
+    transform: translateY(1px); 
+}
+
+
+
+/* ==============================
+   説明文（pタグ）のスタイル修正
+   ============================== */
+a p {
+    /* 説明文のテキスト自体は左寄せ */
+    text-align: middle; 
+    
+    /* 幅の固定 (width: 360px;) は引き続き削除したまま */
+    
+    margin-top: 15px; 
+    margin-bottom: 0;
+    
+    /* ★修正点1: 左にずらして青い枠線の左端に揃える */
+    margin-left: -15px; 
+    
+    /* 文字色を濃い色 (#333) に戻す */
+    color: #000000; 
+    
+    /* 文字の後ろに半透明の白い背景を追加 */
+    background-color: rgba(255, 255, 255, 0.7); 
+    padding: 5px;
+    
+    /* 背景が文字幅に収まるようにする */
+    display: inline-block;
+    
+    font-weight: bold; 
+    
+    /* ★修正点2: 文字の大きさを小さくして改行を防ぐ */
+    font-size: 0.9em; /* 1emが基準。0.9emは10%縮小 */
+    /* これでも改行する場合は 0.8em などにさらに小さくしてください。 */
+}
