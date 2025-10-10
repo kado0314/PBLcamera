@@ -82,7 +82,7 @@ body {
     font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif; 
     
     /* ★修正点: 画像背景設定 */
-    background-image: url('p820.jpg'); /* 画像ファイルのパスを指定 */
+    background-image: url('./static/image/p820.jpg'); /* 画像ファイルのパスを指定 */
     background-size: cover;                        /* 画像が画面全体を覆うように設定 */
     background-attachment: fixed;                  /* 画像がスクロールしても固定されるように設定 */
     background-color: #f0f0f0;                      /* 画像が読み込まれない場合の代替背景色 */
@@ -193,4 +193,5 @@ a p {
     /* ★修正点2: 文字の大きさを小さくして改行を防ぐ */
     font-size: 0.9em; /* 1emが基準。0.9emは10%縮小 */
     /* これでも改行する場合は 0.8em などにさらに小さくしてください。 */
+
 }
