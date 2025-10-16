@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Webカメラ監視＆画像差分通知</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="{{ url_for('detect.static', filename='main.js') }}"></script>
     
     <style>
         body { font-family: sans-serif; padding: 20px; }
@@ -53,4 +53,5 @@
 
     <script src="main.js"></script>
 </body>
+
 </html>
