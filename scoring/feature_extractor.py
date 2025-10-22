@@ -2,7 +2,7 @@
 import cv2
 import numpy as np
 from typing import Dict, Any
-from rules_db import BIAS_ADJUSTMENTS
+from .rules_db import BIAS_ADJUSTMENTS
 
 
 def preprocess_image(img: np.ndarray) -> np.ndarray:
@@ -50,3 +50,4 @@ def extract_silhouette_features(img: np.ndarray, user_gender: str) -> Dict[str, 
     return dummy_ratios
 
 # ... 他の feature_extractor 関数 (material/texture, object_detection for accessories, etc.)
+
