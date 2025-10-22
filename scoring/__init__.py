@@ -1,18 +1,19 @@
-from flask import Blueprint, render_template, request
-from scoring.scorer_main import calculate_score
+from flask import Flask, render_template, request
+from .scorer_main import calculate_score
 
-# Blueprint の作成
-scoring_bp = Blueprint('scoring', __name__, template_folder='templates')
+def create_app():
+    app = Flask(__name__)
 
-@scoring_bp.route('/score', methods=['GET', 'POST'])
-def style_score():
-    if request.method == 'POST':
-        # 仮の処理：採点
-        score, feedback, recommendation, subscores = calculate_score(None)
-        return render_template('score.html',
-                               score=score,
-                               feedback=feedback,
-                               recommendation=recommendation,
-                               subscores=subscores,
-                               uploaded_image_data=None)
-    return render_template('score.html')
+    # メインページ（フォームを表示）
+    @app.route('/')
+    def index():
+        return render_template('score.html')
+
+    # フォームから送られたデータを受け取って採点する
+    @app.route('/score', methods=['POST'])
+    def score():
+        text = request.form['text']  # HTMLのフォームから送られたテキストを受け取る
+        result = calculate_score(text)  # scorer_main.pyの関数を使って採点
+        return render_template('score.html', result=result, input_text=text)
+
+    return app
