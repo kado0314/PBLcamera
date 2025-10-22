@@ -5,7 +5,7 @@ from typing import Dict, List, Any
 import numpy as np
 import cv2
 import base64
-from rules_db import SCORE_WEIGHTS, BIAS_ADJUSTMENTS, TPO_RULES
+from .rules_db import SCORE_WEIGHTS, BIAS_ADJUSTMENTS, TPO_RULES
 from feature_extractor import (
     preprocess_image, 
     extract_color_features, 
@@ -196,3 +196,4 @@ if __name__ == "__main__":
     print("=== ファッション採点AI (シミュレーション結果) ===")
     print("=" * 40)
     print(json.dumps(result, indent=2, ensure_ascii=False))
+
