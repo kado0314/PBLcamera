@@ -1,19 +1,23 @@
 from flask import Flask, render_template, request
-from .scorer_main import calculate_score
+from .scorer_main import FashionScorer
 
 def create_app():
     app = Flask(__name__)
 
-    # メインページ（フォームを表示）
     @app.route('/')
     def index():
         return render_template('score.html')
 
-    # フォームから送られたデータを受け取って採点する
     @app.route('/score', methods=['POST'])
     def score():
-        text = request.form['text']  # HTMLのフォームから送られたテキストを受け取る
-        result = calculate_score(text)  # scorer_main.pyの関数を使って採点
+        text = request.form['text']
+
+        # FashionScorer クラスを使うように変更
+        scorer = FashionScorer(user_gender="neutral")
+        # ここではダミーデータを使う（本来は画像base64とmetadata）
+        dummy_metadata = {"user_locale": "ja-JP", "intended_scene": "casual"}
+        result = scorer.analyze(text, dummy_metadata)  # ← analyze() に渡す
+
         return render_template('score.html', result=result, input_text=text)
 
     return app
