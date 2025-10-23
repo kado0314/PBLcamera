@@ -6,7 +6,7 @@ def create_app():
 
     @app.route('/')
     def index():
-        return render_template('score.html')
+        return render_template('saiten.html')
 
     @app.route('/score', methods=['POST'])
     def score():
@@ -21,3 +21,4 @@ def create_app():
         return render_template('score.html', result=result, input_text=text)
 
     return app
+
