@@ -8,26 +8,20 @@
 </head>
 <body>
     <h1>ファッション採点</h1>
-    <form method="POST" enctype="multipart/form-data">
-        <label>画像をアップロード:</label><br>
-        <input type="file" name="image_file" accept="image/*" capture="camera"><br><br>
+    <form method="POST" enctype="multipart/form-data" action="{{ url_for('scoring.saiten') }}">
+        <label>テキスト入力（仮）:</label><br>
+        <input type="text" name="text"><br><br>
         <button type="submit">採点して</button>
     </form>
-
-    {% if uploaded_image_data %}
-    <hr>
-    <h3>採点対象</h3>
-    <img src="{{ uploaded_image_data }}" style="max-width:300px;">
-    {% endif %}
 
     {% if score is not none %}
     <hr>
     <h2>採点結果: {{ score }} 点</h2>
     <p>{{ recommendation }}</p>
     <ul>
-      {% for f in feedback %}
-        <li>{{ f }}</li>
-      {% endfor %}
+        {% for f in feedback %}
+            <li>{{ f }}</li>
+        {% endfor %}
     </ul>
     {% endif %}
 </body>
