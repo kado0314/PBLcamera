@@ -25,14 +25,18 @@ def saiten():
             _, buffer = cv2.imencode('.jpg', img)
             uploaded_image_data = f"data:image/jpeg;base64,{base64.b64encode(buffer).decode('utf-8')}"
 
+            # --- 🔧 analyze()用にBase64文字列を用意 ---
+            image_base64 = base64.b64encode(buffer).decode('utf-8')
+
             # 採点処理
             scorer = FashionScorer(user_gender="neutral")
             dummy_metadata = {"user_locale": "ja-JP", "intended_scene": "casual"}
-            result = scorer.analyze(img, dummy_metadata)
+            result = scorer.analyze(image_base64, dummy_metadata)
 
-            score = result.get('score', None)
-            recommendation = result.get('recommendation', None)
-            feedback = result.get('feedback', [])
+            # --- 🔧 結果の受け取り修正 ---
+            score = result.get('overall_score', None)
+            recommendation = "全体的なバランスと印象を考慮した評価です。"
+            feedback = result.get('explanations', [])
 
     return render_template(
         'saiten.html',
