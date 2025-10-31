@@ -1,36 +1,54 @@
-@scoring_bp.route("/saiten", methods=["POST"])
-def saiten():
-    image_file = request.files.get("image_file")
-    if not image_file:
-        return render_template("saiten.html", score=None, feedback=["画像がアップロードされていません。"])
+import matplotlib.pyplot as plt
+import numpy as np
+import io, base64, matplotlib
+from matplotlib import font_manager
 
-    # 画像をBase64化
-    image_data = base64.b64encode(image_file.read()).decode("utf-8")
-    scorer = FashionScorer(user_gender="neutral")
-    result = scorer.analyze(image_data, {"user_locale": "ja-JP", "intended_scene": "date"})
+def generate_radar_chart(aspect_scores):
+    # ======== 日本語フォント設定 ========
+    # Linux上ではフォントパスを明示する必要がある
+    font_path = "/usr/share/fonts/truetype/ipafont-gothic/ipagp.ttf"  # インストールされるフォントパス
+    if not font_manager.findfont(font_path, fallback_to_default=False):
+        print("⚠️ IPAフォントが見つかりません。別のフォントにフォールバックします。")
+    else:
+        font_manager.fontManager.addfont(font_path)
+        matplotlib.rcParams["font.family"] = "IPAPGothic"
 
-    # --- subscores を安全に取得 ---
-    aspect_scores = result.get("subscores", None)
-    if not aspect_scores:
-        print("⚠️ subscores が見つかりません。結果:", result)
-        aspect_scores = {
-            "color_harmony": 0,
-            "fit_and_silhouette": 0,
-            "item_coordination": 0,
-            "cleanliness_material": 0,
-            "accessories_balance": 0,
-            "trendness": 0,
-            "tpo_suitability": 0,
-            "photogenic_quality": 0
-        }
+    # ======== 日本語ラベルに対応する辞書 ========
+    label_map = {
+        'color_harmony': '色の調和',
+        'fit_and_silhouette': 'シルエット・フィット感',
+        'item_coordination': 'アイテムの組み合わせ',
+        'cleanliness_material': '清潔感・素材感',
+        'accessories_balance': '小物のバランス',
+        'trendness': 'トレンド感',
+        'tpo_suitability': 'TPO適合度',
+        'photogenic_quality': '写真映え'
+    }
 
-    radar_chart_data = generate_radar_chart(aspect_scores)
+    # ======== キーを日本語に変換 ========
+    labels = [label_map.get(key, key) for key in aspect_scores.keys()]
+    values = list(aspect_scores.values())
 
-    return render_template(
-        "saiten.html",
-        uploaded_image_data=f"data:image/png;base64,{image_data}",
-        score=result.get("overall_score", "N/A"),
-        recommendation="あなたのコーディネートをさらに引き立てるポイントがあります！",
-        feedback=result.get("explanations", ["詳細な説明はありません。"]),
-        radar_chart_data=radar_chart_data
-    )
+    # ======== 円グラフの軸設定 ========
+    num_vars = len(labels)
+    angles = np.linspace(0, 2 * np.pi, num_vars, endpoint=False).tolist()
+    values += values[:1]
+    angles += angles[:1]
+
+    fig, ax = plt.subplots(figsize=(6, 6), subplot_kw=dict(polar=True))
+    ax.plot(angles, values, color='blue', linewidth=2)
+    ax.fill(angles, values, color='skyblue', alpha=0.25)
+
+    # ======== 日本語ラベルを表示 ========
+    ax.set_xticks(angles[:-1])
+    ax.set_xticklabels(labels, fontsize=10)
+    ax.set_yticklabels([])
+    ax.set_ylim(0, 25)
+
+    buf = io.BytesIO()
+    plt.savefig(buf, format='png')
+    buf.seek(0)
+    chart_base64 = base64.b64encode(buf.read()).decode('utf-8')
+    plt.close(fig)
+
+    return f"data:image/png;base64,{chart_base64}"
