@@ -24,6 +24,7 @@ def saiten():
     # 採点処理
     scorer = FashionScorer(user_gender="neutral")
     result = scorer.analyze(image_base64, {"user_locale": "ja-JP", "intended_scene": "casual"})
+    print(result["subscores"])
 
     # レーダーチャート生成
     radar_chart_data = generate_radar_chart(result.get("subscores", {}))
