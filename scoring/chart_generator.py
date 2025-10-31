@@ -8,6 +8,9 @@ def generate_radar_chart(aspect_scores):
     import base64
     import numpy as np
 
+    # 日本語フォント設定
+    matplotlib.rcParams['font.family'] = 'IPAPGothic'
+
     # 日本語ラベルに対応する辞書
     label_map = {
         'color_harmony': '色の調和',
@@ -36,7 +39,7 @@ def generate_radar_chart(aspect_scores):
 
     # 日本語ラベルを表示
     ax.set_xticks(angles[:-1])
-    ax.set_xticklabels(labels, fontsize=10, fontname="MS Gothic")
+    ax.set_xticklabels(labels, fontsize=10)
 
     ax.set_yticklabels([])
     ax.set_ylim(0, 25)
