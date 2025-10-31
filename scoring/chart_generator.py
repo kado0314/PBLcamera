@@ -1,17 +1,19 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import io, base64, matplotlib
+from matplotlib import font_manager
 
 def generate_radar_chart(aspect_scores):
-    import matplotlib.pyplot as plt
-    import io
-    import base64
-    import numpy as np
+    # ======== 日本語フォント設定 ========
+    # Linux上ではフォントパスを明示する必要がある
+    font_path = "/usr/share/fonts/truetype/ipafont-gothic/ipagp.ttf"  # インストールされるフォントパス
+    if not font_manager.findfont(font_path, fallback_to_default=False):
+        print("⚠️ IPAフォントが見つかりません。別のフォントにフォールバックします。")
+    else:
+        font_manager.fontManager.addfont(font_path)
+        matplotlib.rcParams["font.family"] = "IPAPGothic"
 
-    # 日本語フォント設定
-    matplotlib.rcParams['font.family'] = 'IPAPGothic'
-
-    # 日本語ラベルに対応する辞書
+    # ======== 日本語ラベルに対応する辞書 ========
     label_map = {
         'color_harmony': '色の調和',
         'fit_and_silhouette': 'シルエット・フィット感',
@@ -23,11 +25,11 @@ def generate_radar_chart(aspect_scores):
         'photogenic_quality': '写真映え'
     }
 
-    # キーを日本語に変換
+    # ======== キーを日本語に変換 ========
     labels = [label_map.get(key, key) for key in aspect_scores.keys()]
     values = list(aspect_scores.values())
 
-    # 円グラフの軸設定
+    # ======== 円グラフの軸設定 ========
     num_vars = len(labels)
     angles = np.linspace(0, 2 * np.pi, num_vars, endpoint=False).tolist()
     values += values[:1]
@@ -37,10 +39,9 @@ def generate_radar_chart(aspect_scores):
     ax.plot(angles, values, color='blue', linewidth=2)
     ax.fill(angles, values, color='skyblue', alpha=0.25)
 
-    # 日本語ラベルを表示
+    # ======== 日本語ラベルを表示 ========
     ax.set_xticks(angles[:-1])
     ax.set_xticklabels(labels, fontsize=10)
-
     ax.set_yticklabels([])
     ax.set_ylim(0, 25)
 
