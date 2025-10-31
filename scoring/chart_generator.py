@@ -10,18 +10,21 @@ def generate_radar_chart(aspect_scores):
     # 日本語フォント設定
     matplotlib.rcParams['font.family'] = 'IPAPGothic'
 
-    # 英語 → 日本語 のラベル変換マップ
+    # 英語キーから日本語ラベルへの変換
     label_map = {
-        "color_balance": "色のバランス",
-        "style_match": "スタイルの統一感",
-        "fit": "サイズ感",
-        "cleanliness": "清潔感",
-        "uniqueness": "個性",
-        "seasonal": "季節感"
+        'color_harmony': '色の調和',
+        'fit_and_silhouette': 'シルエット・フィット感',
+        'item_coordination': 'アイテムの組み合わせ',
+        'cleanliness_material': '清潔感・素材感',
+        'accessories_balance': '小物のバランス',
+        'trendness': 'トレンド感',
+        'tpo_suitability': 'TPO（場面）適合度',
+        'photogenic_quality': '写真映え'
     }
 
-    # 英語のキーを日本語に置き換え（存在しないキーはそのまま）
-    labels = [label_map.get(k, k) for k in aspect_scores.keys()]
+    # ラベルを日本語に変換
+    labels = [label_map.get(key, key) for key in scores.keys()]
+
     values = list(aspect_scores.values())
 
     # 六角形を閉じる
