@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: fashion-scorer
+    env: python
+    region: oregon  # or tokyo (Renderの東京リージョンを選択したい場合)
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn main:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11
