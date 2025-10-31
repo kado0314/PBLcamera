@@ -2,8 +2,11 @@ services:
   - type: web
     name: fashion-scorer
     env: python
-    region: oregon  # or tokyo (Renderの東京リージョンを選択したい場合)
-    buildCommand: pip install -r requirements.txt
+    region: oregon  # or tokyo（Renderの東京リージョンを選択したい場合）
+    buildCommand: |
+      apt-get update && \
+      apt-get install -y fonts-ipafont-gothic && \
+      pip install -r requirements.txt
     startCommand: gunicorn main:app
     envVars:
       - key: PYTHON_VERSION
