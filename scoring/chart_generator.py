@@ -3,14 +3,12 @@ import numpy as np
 import io, base64, matplotlib
 
 def generate_radar_chart(aspect_scores):
-    """六角形レーダーチャートをBase64画像として返す（日本語ラベル対応）"""
-    if not aspect_scores:
-        return None
+    import matplotlib.pyplot as plt
+    import io
+    import base64
+    import numpy as np
 
-    # 日本語フォント設定
-    matplotlib.rcParams['font.family'] = 'IPAPGothic'
-
-    # 英語キーから日本語ラベルへの変換
+    # 日本語ラベルに対応する辞書
     label_map = {
         'color_harmony': '色の調和',
         'fit_and_silhouette': 'シルエット・フィット感',
@@ -18,33 +16,35 @@ def generate_radar_chart(aspect_scores):
         'cleanliness_material': '清潔感・素材感',
         'accessories_balance': '小物のバランス',
         'trendness': 'トレンド感',
-        'tpo_suitability': 'TPO（場面）適合度',
+        'tpo_suitability': 'TPO適合度',
         'photogenic_quality': '写真映え'
     }
 
-    # ラベルを日本語に変換
-    labels = [label_map.get(key, key) for key in scores.keys()]
-
+    # キーを日本語に変換
+    labels = [label_map.get(key, key) for key in aspect_scores.keys()]
     values = list(aspect_scores.values())
 
-    # 六角形を閉じる
+    # 円グラフの軸設定
+    num_vars = len(labels)
+    angles = np.linspace(0, 2 * np.pi, num_vars, endpoint=False).tolist()
     values += values[:1]
-    angles = np.linspace(0, 2 * np.pi, len(labels), endpoint=False).tolist()
     angles += angles[:1]
 
-    # グラフ描画
-    plt.figure(figsize=(5, 5))
-    ax = plt.subplot(111, polar=True)
-    ax.plot(angles, values, linewidth=2, linestyle='solid')
-    ax.fill(angles, values, 'skyblue', alpha=0.4)
-    ax.set_yticklabels([])
-    ax.set_xticks(angles[:-1])
-    ax.set_xticklabels(labels, fontsize=12)
-    ax.set_title("ファッション採点レーダーチャート", fontsize=14, pad=20)
+    fig, ax = plt.subplots(figsize=(6, 6), subplot_kw=dict(polar=True))
+    ax.plot(angles, values, color='blue', linewidth=2)
+    ax.fill(angles, values, color='skyblue', alpha=0.25)
 
-    # Base64変換
+    # 日本語ラベルを表示
+    ax.set_xticks(angles[:-1])
+    ax.set_xticklabels(labels, fontsize=10, fontname="MS Gothic")
+
+    ax.set_yticklabels([])
+    ax.set_ylim(0, 25)
+
     buf = io.BytesIO()
-    plt.savefig(buf, format='png', bbox_inches='tight')
-    plt.close()
+    plt.savefig(buf, format='png')
     buf.seek(0)
-    return f"data:image/png;base64,{base64.b64encode(buf.getvalue()).decode('utf-8')}"
+    chart_base64 = base64.b64encode(buf.read()).decode('utf-8')
+    plt.close(fig)
+
+    return f"data:image/png;base64,{chart_base64}"
