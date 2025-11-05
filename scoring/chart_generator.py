@@ -4,14 +4,18 @@ import io, base64, matplotlib
 from matplotlib import font_manager
 
 def generate_radar_chart(aspect_scores):
+    """六角形レーダーチャートをBase64画像として返す"""
     # ======== 日本語フォント設定 ========
-    # Linux上ではフォントパスを明示する必要がある
-    font_path = "/usr/share/fonts/truetype/ipafont-gothic/ipagp.ttf"  # インストールされるフォントパス
-    if not font_manager.findfont(font_path, fallback_to_default=False):
-        print("⚠️ IPAフォントが見つかりません。別のフォントにフォールバックします。")
-    else:
+    font_path = "/usr/share/fonts/truetype/ipafont-gothic/ipagp.ttf"
+    try:
+        # フォントを追加し、そのフォント名を取得して設定
         font_manager.fontManager.addfont(font_path)
-        matplotlib.rcParams["font.family"] = "IPAPGothic"
+        prop = font_manager.FontProperties(fname=font_path)
+        matplotlib.rcParams['font.family'] = prop.get_name()
+        print(f"✅ 使用フォント: {prop.get_name()}")
+    except Exception as e:
+        print(f"⚠️ IPAフォント設定に失敗: {e}")
+        matplotlib.rcParams['font.family'] = 'DejaVu Sans'
 
     # ======== 日本語ラベルに対応する辞書 ========
     label_map = {
@@ -39,7 +43,6 @@ def generate_radar_chart(aspect_scores):
     ax.plot(angles, values, color='blue', linewidth=2)
     ax.fill(angles, values, color='skyblue', alpha=0.25)
 
-    # ======== 日本語ラベルを表示 ========
     ax.set_xticks(angles[:-1])
     ax.set_xticklabels(labels, fontsize=10)
     ax.set_yticklabels([])
