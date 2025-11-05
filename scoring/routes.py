@@ -8,18 +8,44 @@ scoring_bp = Blueprint("scoring", __name__, template_folder="templates")
 @scoring_bp.route("/", methods=["GET"])
 def index():
     """採点ページを表示"""
-    return render_template("saiten.html")
+    # ▼▼▼ 修正: ページの初期表示時にデフォルトの選択値を渡す ▼▼▼
+    return render_template("saiten.html", selected_gender="neutral", selected_scene="date")
 
 @scoring_bp.route("/saiten", methods=["POST"])
 def saiten():
     image_file = request.files.get("image_file")
+
+    # ▼▼▼ 修正: フォームからデータを取得。値がない場合はデフォルト値を設定 ▼▼▼
+    user_gender = request.form.get("user_gender", "neutral")
+    intended_scene = request.form.get("intended_scene", "date")
+    # ▲▲▲ 修正 ▲▲▲
+
     if not image_file:
-        return render_template("saiten.html", score=None, feedback=["画像がアップロードされていません。"])
+        # 画像がない場合でも、フォームの選択状態を維持してページを再表示
+        return render_template(
+            "saiten.html", 
+            score=None, 
+            feedback=["画像がアップロードされていません。"],
+            selected_gender=user_gender,
+            selected_scene=intended_scene
+        )
 
     # 画像をBase64化
     image_data = base64.b64encode(image_file.read()).decode("utf-8")
-    scorer = FashionScorer(user_gender="neutral")
-    result = scorer.analyze(image_data, {"user_locale": "ja-JP", "intended_scene": "date"})
+    
+    # ▼▼▼ 修正: ハードコーディングされていた箇所をフォームの値で置き換え ▼▼▼
+    
+    # 1. FashionScorerの初期化にフォームの性別を渡す
+    scorer = FashionScorer(user_gender=user_gender)
+    
+    # 2. analyzeメソッドのメタデータにもフォームの値を渡す
+    metadata = {
+        "user_locale": "ja-JP", 
+        "intended_scene": intended_scene,
+        "user_gender": user_gender # scorer_main.pyのanalyzeメソッド内でも参照するため
+    }
+    result = scorer.analyze(image_data, metadata)
+    # ▲▲▲ 修正 ▲▲▲
 
     # --- subscores を安全に取得 ---
     aspect_scores = result.get("subscores", None)
@@ -44,5 +70,8 @@ def saiten():
         score=result.get("overall_score", "N/A"),
         recommendation="あなたのコーディネートをさらに引き立てるポイントがあります！",
         feedback=result.get("explanations", ["詳細な説明はありません。"]),
-        radar_chart_data=radar_chart_data
+        radar_chart_data=radar_chart_data,
+        # ▼▼▼ 修正: 採点結果とともに、フォームの選択状態を維持する ▼▼▼
+        selected_gender=user_gender,
+        selected_scene=intended_scene
     )
