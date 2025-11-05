@@ -82,7 +82,7 @@ label {
 input[type="file"] {
     display: block;
     width: 100%;
-    padding: 0.5rem;
+    padding: 0.75rem; /* selectタグと高さを合わせるため 0.5rem -> 0.75rem に変更 */
     border: 1px solid #d1d5db; /* Gray-300 */
     border-radius: 0.5rem;
     box-sizing: border-box;
@@ -90,6 +90,33 @@ input[type="file"] {
     font-size: 1rem;
     line-height: 1.5;
 }
+
+/* ▼▼▼ 修正: selectタグのスタイリングを追加 ▼▼▼ */
+select {
+    display: block;
+    width: 100%;
+    padding: 0.75rem; /* input[type=file] と高さを合わせる */
+    border: 1px solid #d1d5db; /* Gray-300 */
+    border-radius: 0.5rem;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-size: 1rem;
+    line-height: 1.5;
+    background-color: white; /* 背景色を白に */
+    
+    /* 簡易的なカスタム矢印 (ブラウザのデフォルト矢印を上書き) */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    /* 右側に下向きの矢印アイコン（SVG）を配置 */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20fill%3D%22none%22%20stroke%3D%22%236b7280%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M6%209l6%206%206-6%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1em;
+    padding-right: 2.5rem; /* 矢印のスペース確保 */
+}
+/* ▲▲▲ 修正 ▲▲▲ */
+
 
 /* 5. 採点ボタンのスタイリング */
 button[type="submit"] {
