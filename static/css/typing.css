@@ -180,11 +180,11 @@ p#status {
 }
 
 #classListContainer {
-    max-height: 60vh; /* 高さを制限 */
-    overflow-y: auto; /* 縦スクロールを有効化 */
-    padding-right: 15px; /* スクロールバーのスペース */
+    max-height: 60vh;
+    overflow-y: auto;
+    padding-right: 15px;
     display: grid;
-    grid-template-columns: 1fr 1fr; /* 2列レイアウト */
+    grid-template-columns: 1fr 1fr;
     gap: 10px;
 }
 
@@ -196,13 +196,16 @@ p#status {
 }
 
 #searchInput {
+  display: block;
   width: 100%;
+  max-width: 100%;
   padding: 10px;
-  margin-bottom: 12px;
+  margin: 0 auto 12px auto;
   border: 2px solid #ccc;
   border-radius: 6px;
   font-size: 1em;
   transition: border-color 0.2s;
+  box-sizing: border-box;
 }
 
 #searchInput:focus {
