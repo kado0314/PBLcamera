@@ -38,10 +38,12 @@
         <div class="modal-content">
             <span class="closeButton">&times;</span>
             <h2>検出可能なお題リスト (全90種)</h2>
+            <input type="text" id="searchInput" placeholder="キーワードで検索（例: cat, dog, apple）" oninput="filterClassList()">
             <div id="classListContainer">
             </div>
         </div>
     </div>
+    
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
     
