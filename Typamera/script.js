@@ -24,6 +24,7 @@ let gameInterval;
 let detectionInterval;
 let stream = null; 
 let isGameRunning = false;
+let isTargetLocked = false;
 
 // ▼▼▼ COCO-SSD 90クラスの英語・日本語対応表 ▼▼▼
 const COCO_CLASSES = {
@@ -158,6 +159,7 @@ async function detectObjects(forceNewWord = false) {
         
         if (forceNewWord || targetWord === '---' || !detectedClasses.includes(targetWord)) {
             setNewTargetWord(detectedClasses);
+            isTargetLocked = true;
         }
     } else {
         statusElement.textContent = 'お題が見つかりません。カメラに何か映してください。';
@@ -191,7 +193,8 @@ typingInput.addEventListener('input', () => {
         score++;
         scoreElement.textContent = score;
         feedbackElement.textContent = `⭕ 正解！「${targetWord}」`;
-        detectObjects(true); 
+        isTargetLocked = false;
+        detectObjects(true);
     } else if (targetWord.startsWith(typedText)) {
         feedbackElement.textContent = 'タイピング中...';
     } else {
