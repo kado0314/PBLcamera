@@ -241,6 +241,18 @@ function populateClassList() {
     classListContainer.innerHTML = htmlContent;
 }
 
+function filterClassList() {
+    const input = document.getElementById("searchInput").value.toLowerCase();
+    const items = document.querySelectorAll("#classListContainer p");
+
+    items.forEach(item => {
+        const text = item.textContent.toLowerCase(); // "apple: リンゴ" の形
+
+        // 検索ワードが英語 or 日本語のどちらでも一致するように
+        item.style.display = text.includes(input) ? "block" : "none";
+    });
+}
+
 // 「詳細」ボタンがクリックされたらモーダルを表示
 detailsButton.addEventListener('click', () => {
     detailsModal.style.display = 'block';
