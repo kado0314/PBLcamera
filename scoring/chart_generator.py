@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import io, base64, os
 from matplotlib import font_manager
+from .rules_db import SCORE_WEIGHTS  # ← ここを追加！
 
 def generate_radar_chart(aspect_scores):
     """
@@ -9,7 +10,6 @@ def generate_radar_chart(aspect_scores):
     """
 
     # ======== フォント設定 ========
-    # PBLcamera/fonts/KleeOne-Regular.ttf を指定
     font_path = os.path.join(os.path.dirname(__file__), '..', 'fonts', 'KleeOne-Regular.ttf')
     font_path = os.path.abspath(font_path)
 
@@ -41,20 +41,24 @@ def generate_radar_chart(aspect_scores):
     labels = [label_map.get(key, key) for key in aspect_scores.keys()]
     values = list(aspect_scores.values())
 
-    # ======== 六角形レーダーチャート設定 ========
+    # ======== 自動スケール調整（項目ごとの満点に合わせる） ========
+    max_values = [SCORE_WEIGHTS.get(key, 10.0) for key in aspect_scores.keys()]  # 各項目の最大値
+    normalized_values = [v / m * 100 for v, m in zip(values, max_values)]  # 各項目を0〜100で正規化
+
+    # ======== レーダーチャート設定 ========
     num_vars = len(labels)
     angles = np.linspace(0, 2 * np.pi, num_vars, endpoint=False).tolist()
-    values += values[:1]
+    normalized_values += normalized_values[:1]
     angles += angles[:1]
 
     fig, ax = plt.subplots(figsize=(6, 6), subplot_kw=dict(polar=True))
-    ax.plot(angles, values, color='blue', linewidth=2)
-    ax.fill(angles, values, color='skyblue', alpha=0.25)
+    ax.plot(angles, normalized_values, color='blue', linewidth=2)
+    ax.fill(angles, normalized_values, color='skyblue', alpha=0.25)
     ax.set_xticks(angles[:-1])
     ax.set_xticklabels(labels, fontsize=10)
     ax.set_yticklabels([])
-    ax.set_ylim(0, 25)
-    ax.set_title("ファッション採点レーダーチャート", fontsize=14, pad=20)
+    ax.set_ylim(0, 100)
+    ax.set_title("ファッション採点レーダーチャート（各項目の満点にスケール）", fontsize=13, pad=20)
 
     # ======== Base64変換 ========
     buf = io.BytesIO()
