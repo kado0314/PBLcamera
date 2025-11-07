@@ -11,8 +11,16 @@ def index():
     # ▼▼▼ 修正: ページの初期表示時にデフォルトの選択値を渡す ▼▼▼
     return render_template("saiten.html", selected_gender="neutral", selected_scene="date")
 
-@scoring_bp.route("/saiten", methods=["POST"])
+@scoring_bp.route("/saiten", methods=["GET", "POST"])
 def saiten():
+    if request.method == "GET":
+        # 初回アクセス時に採点フォームを表示
+        return render_template(
+            "saiten.html",
+            selected_gender="neutral",
+            selected_scene="date"
+        )
+        
     image_file = request.files.get("image_file")
 
     # ▼▼▼ 修正: フォームからデータを取得。値がない場合はデフォルト値を設定 ▼▼▼
