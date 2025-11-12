@@ -1,4 +1,3 @@
-# scorer_main.py
 from datetime import datetime
 import json
 from typing import Dict, List, Any
@@ -114,6 +113,14 @@ class FashionScorer:
         if max(h, w) > max_size:
             scale = max_size / max(h, w)
             img = cv2.resize(img, (int(w * scale), int(h * scale)), interpolation=cv2.INTER_AREA)
+
+        # JPEG圧縮→再デコードでメモリとバッファを削減
+        try:
+            _, buf = cv2.imencode('.jpg', img, [int(cv2.IMWRITE_JPEG_QUALITY), 70])
+            img = cv2.imdecode(buf, cv2.IMREAD_COLOR)
+        except Exception:
+            # 圧縮失敗しても処理継続
+            pass
         
         preprocessed_img = preprocess_image(img)
         
@@ -202,6 +209,7 @@ if __name__ == "__main__":
     print("=== ファッション採点AI (シミュレーション結果) ===")
     print("=" * 40)
     print(json.dumps(result, indent=2, ensure_ascii=False))
+
 
 
 
