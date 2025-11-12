@@ -9,7 +9,7 @@ scoring_bp = Blueprint("scoring", __name__, template_folder="templates")
 def index():
     """採点ページを表示"""
     # ▼▼▼ 修正: ページの初期表示時にデフォルトの選択値を渡す ▼▼▼
-    return render_template("saiten.html", uploaded_image_data=False, selected_gender="neutral", selected_scene="date")
+    return render_template("saiten.html", uploaded_image_data=False, selected_gender="neutral", selected_scene="date", score=None)
 
 @scoring_bp.route("/saiten", methods=["GET", "POST"])
 def saiten():
@@ -19,7 +19,8 @@ def saiten():
             "saiten.html",
             uploaded_image_data=False,
             selected_gender="neutral",
-            selected_scene="date"
+            selected_scene="date",
+            score=None
         )
         
     image_file = request.files.get("image_file")
