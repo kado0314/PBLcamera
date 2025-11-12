@@ -13,6 +13,8 @@
         <label>画像をアップロード:</label><br>
         <input type="file" name="image_file" accept="image/*" capture="camera"><br><br>
 
+        <img id="imagePreview" src="" style="max-width:300px; display: none; margin-bottom: 10px;"><br>
+
         <label for="user_gender">性別:</label><br>
         <select name="user_gender" id="user_gender">
             <option value="neutral" {% if selected_gender == 'neutral' %}selected{% endif %}>指定なし (Neutral)</option>
@@ -53,5 +55,36 @@
     <h3>スコアチャート</h3>
     <img src="{{ radar_chart_data }}" alt="レーダーチャート" style="max-width:400px;">
     {% endif %}
+    <script>
+    // 1. ファイル選択フィールドとプレビュー要素を取得
+        const imageInput = document.getElementById('imageInput');
+        const imagePreview = document.getElementById('imagePreview');
+
+    // 2. ファイルが選択されたときのイベントリスナーを設定
+        imageInput.addEventListener('change', function(event) {
+        // 選択されたファイルを取得
+            const file = event.target.files[0];
+        
+            if (file) {
+            // ファイルリーダーを作成し、ファイルの内容を読み込む
+                const reader = new FileReader();
+            
+                reader.onload = function(e) {
+                // 読み込み完了後、プレビュー要素のsrc属性に設定
+                    imagePreview.src = e.target.result;
+                // プレビュー要素を表示状態にする
+                    imagePreview.style.display = 'block';
+                };
+            
+            // ファイルをData URL (Base64) として読み込む
+                reader.readAsDataURL(file);
+            } else {
+            // ファイル選択がキャンセルされた場合、プレビューを非表示にする
+                imagePreview.src = '';
+                imagePreview.style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>
+
