@@ -10,6 +10,7 @@ def index():
     """採点ページを表示"""
     # ▼▼▼ 修正: ページの初期表示時にデフォルトの選択値を渡す ▼▼▼
     return render_template("saiten.html", uploaded_image_data=False, selected_gender="neutral", selected_scene="date")
+    print(f'1  :  {uploaded_image_data}')
 
 @scoring_bp.route("/saiten", methods=["GET", "POST"])
 def saiten():
@@ -21,6 +22,7 @@ def saiten():
             selected_gender="neutral",
             selected_scene="date"
         )
+    print(f'2  :  {uploaded_image_data}')
         
     image_file = request.files.get("image_file")
 
