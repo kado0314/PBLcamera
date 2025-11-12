@@ -17,6 +17,7 @@ def saiten():
         # 初回アクセス時に採点フォームを表示
         return render_template(
             "saiten.html",
+            uploaded_image_data=False,
             selected_gender="neutral",
             selected_scene="date"
         )
