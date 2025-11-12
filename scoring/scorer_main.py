@@ -108,7 +108,13 @@ class FashionScorer:
         img = self.load_image_from_base64(image_base64)
         if img is None:
             return {"error": "Invalid image data."}
-            
+
+        max_size = 200  # ← 400→200 に
+        h, w = img.shape[:2]
+        if max(h, w) > max_size:
+            scale = max_size / max(h, w)
+            img = cv2.resize(img, (int(w * scale), int(h * scale)), interpolation=cv2.INTER_AREA)
+        
         preprocessed_img = preprocess_image(img)
         
         # 2. 特徴量抽出
@@ -196,6 +202,7 @@ if __name__ == "__main__":
     print("=== ファッション採点AI (シミュレーション結果) ===")
     print("=" * 40)
     print(json.dumps(result, indent=2, ensure_ascii=False))
+
 
 
 
