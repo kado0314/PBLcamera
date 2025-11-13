@@ -45,22 +45,24 @@
     {% if score is not none %}
     <hr>
     <div class="results">
-        <h2>採点結果</h2>
-        <div class="rating">
-            <h2>{{ score }} 点</h2>
-            <p>{{ recommendation }}</p>
-            <ul>
-                {% for f in feedback %}
-                    <li>{{ f }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-        {% endif %}
-        {% if radar_chart_data %}
-        <hr>
-        <div class="chart">
-            <h3>スコア</h3>
-            <img src="{{ radar_chart_data }}" alt="レーダーチャート" style="max-width:400px;">
+        <div class="res-head"><h2>採点結果</h2></div>
+        <div class="res-body">
+            <div class="rating">
+                <h2>{{ score }} 点</h2>
+                <p>{{ recommendation }}</p>
+                <ul>
+                    {% for f in feedback %}
+                        <li>{{ f }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            {% if radar_chart_data %}
+            <hr>
+            <div class="chart">
+                <h3>スコア</h3>
+                <img src="{{ radar_chart_data }}" alt="レーダーチャート" style="max-width:400px;">
+            </div>
         </div>
     </div>
     {% endif %}
@@ -96,6 +98,7 @@
     </script>
 </body>
 </html>
+
 
 
 
