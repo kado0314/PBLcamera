@@ -142,8 +142,19 @@ button[type="submit"]:hover {
     display: block;
 }
 
-/* 採点結果 */
 .results {
+    background-color: white;
+    border-radius: 0.75rem;
+    box-shadow: var(--card-shadow);
+    border: 1px solid #e5e7eb;
+    padding: 1.5rem 2rem;
+    max-width: 100%;
+    width: 100%;
+    display: flex;
+}
+
+/* 採点結果 */
+.rating {
     background-color: white;
     border-radius: 0.75rem;
     box-shadow: var(--card-shadow);
@@ -153,7 +164,7 @@ button[type="submit"]:hover {
     width: 100%;
 }
 
-.results h2 {
+.rating h2 {
     font-size: 2rem;
     font-weight: 800;
     color: var(--primary-blue);
@@ -162,19 +173,19 @@ button[type="submit"]:hover {
     margin-top: 0;
 }
 
-.results p {
+.rating p {
     font-size: 1.125rem;
     color: #4b5563;
     margin-top: 1rem;
 }
 
-.results ul {
+.rating ul {
     list-style: none;
     padding: 0;
     margin-top: 1rem;
 }
 
-.results ul li {
+.rating ul li {
     background-color: #f9fafb;
     padding: 0.75rem 1rem;
     margin-bottom: 0.5rem;
@@ -220,5 +231,6 @@ button[type="submit"]:hover {
     border: 3px dashed #9ca3af;
     border-radius: 0.5rem;
 }
+
 
 
