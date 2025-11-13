@@ -189,7 +189,6 @@ button[type="submit"]:hover {
 /* レーダーチャート */
 .chart {
     background-color: white;
-    padding: 1.5rem 2rem;
     border-radius: 0.75rem;
     box-shadow: var(--card-shadow);
     border: 1px solid #e5e7eb;
@@ -202,6 +201,7 @@ button[type="submit"]:hover {
     font-weight: 600;
     color: #1f2937;
     margin-bottom: 1rem;
+    padding: 0 1rem
 }
 
 .chart img {
@@ -220,3 +220,4 @@ button[type="submit"]:hover {
     border: 3px dashed #9ca3af;
     border-radius: 0.5rem;
 }
+
