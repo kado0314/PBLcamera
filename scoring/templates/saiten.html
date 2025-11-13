@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>ファッション採点</title>
-    <link rel="stylesheet" href="../../static/css/mycss.css">
+    <link rel="stylesheet" href="../../static/css/fashion.css">
     <link rel="icon" href="https://github.com/kado0314/PBLcamera/blob/main/static/image/huku.png?raw=true" type="image/png">
 </head>
 <body>
     <h1>ファッション採点</h1>
     <form method="POST" enctype="multipart/form-data" action="{{ url_for('scoring.saiten') }}">
         
-        <label>画像をアップロード:</label><br>
+        <label>画像をアップロード</label><br>
         <input type="file" name="image_file" accept="image/*" capture="camera" id="imageInput"><br><br>
 
         <img id="imagePreview" src="" style="max-width:300px; display: none; margin-bottom: 10px;"><br>
 
-        <label for="user_gender">性別:</label><br>
+        <label for="user_gender">性別</label><br>
         <select name="user_gender" id="user_gender">
             <option value="neutral" {% if selected_gender == 'neutral' %}selected{% endif %}>指定なし (Neutral)</option>
             <option value="male" {% if selected_gender == 'male' %}selected{% endif %}>男性 (Male)</option>
@@ -23,7 +23,7 @@
         </select>
         <br><br>
 
-        <label for="intended_scene">TPO (シーン):</label><br>
+        <label for="intended_scene">TPO (シーン)</label><br>
         <select name="intended_scene" id="intended_scene">
             <option value="date" {% if selected_scene == 'date' %}selected{% endif %}>デート</option>
             <option value="work" {% if selected_scene == 'work' %}selected{% endif %}>仕事</option>
@@ -87,5 +87,6 @@
     </script>
 </body>
 </html>
+
 
 
