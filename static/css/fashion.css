@@ -149,7 +149,6 @@ button[type="submit"]:hover {
     box-shadow: var(--card-shadow);
     border: 1px solid #e5e7eb;
     padding: 1.5rem 2rem;
-    margin-bottom: 2rem;
     max-width: 640px;
     width: 100%;
 }
@@ -192,6 +191,7 @@ button[type="submit"]:hover {
     border-radius: 0.75rem;
     box-shadow: var(--card-shadow);
     border: 1px solid #e5e7eb;
+    padding: 1.5rem 2rem;
     max-width: 640px;
     width: 100%;
 }
@@ -220,4 +220,5 @@ button[type="submit"]:hover {
     border: 3px dashed #9ca3af;
     border-radius: 0.5rem;
 }
+
 
