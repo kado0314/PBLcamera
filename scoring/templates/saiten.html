@@ -36,24 +36,29 @@
 
     {% if uploaded_image_data %}
     <hr>
-    <h3>採点対象</h3>
-    <img src="{{ uploaded_image_data }}" style="max-width:300px;">
+    <div class="target">
+        <h3>採点対象</h3>
+        <img src="{{ uploaded_image_data }}" style="max-width:300px;">
+    </div>
     {% endif %}
 
     {% if score is not none %}
     <hr>
-    <h2>採点結果: {{ score }} 点</h2>
-    <p>{{ recommendation }}</p>
-    <ul>
-        {% for f in feedback %}
-            <li>{{ f }}</li>
-        {% endfor %}
-    </ul>
+    <div class="results">
+        <h2>採点結果: {{ score }} 点</h2>
+        <p>{{ recommendation }}</p>
+        <ul>
+            {% for f in feedback %}
+                <li>{{ f }}</li>
+            {% endfor %}
+        </ul>
     {% endif %}
     {% if radar_chart_data %}
     <hr>
-    <h3>スコアチャート</h3>
-    <img src="{{ radar_chart_data }}" alt="レーダーチャート" style="max-width:400px;">
+    <div class="chart">
+        <h3>スコアチャート</h3>
+        <img src="{{ radar_chart_data }}" alt="レーダーチャート" style="max-width:400px;">
+    </div>
     {% endif %}
     <script>
     // 1. ファイル選択フィールドとプレビュー要素を取得
@@ -87,6 +92,7 @@
     </script>
 </body>
 </html>
+
 
 
 
