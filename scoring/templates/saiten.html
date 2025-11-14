@@ -69,94 +69,10 @@
         </div>
     </div>
     {% endif %}
-    <script>
-    // 1. ファイル選択フィールドとプレビュー要素を取得
-        const imageInput = document.getElementById('imageInput');
-        const imagePreview = document.getElementById('imagePreview');
-
-    // 2. ファイルが選択されたときのイベントリスナーを設定
-        imageInput.addEventListener('change', function(event) {
-        // 選択されたファイルを取得
-            const file = event.target.files[0];
-        
-            if (file) {
-            // ファイルリーダーを作成し、ファイルの内容を読み込む
-                const reader = new FileReader();
-            
-                reader.onload = function(e) {
-                // 読み込み完了後、プレビュー要素のsrc属性に設定
-                    imagePreview.src = e.target.result;
-                // プレビュー要素を表示状態にする
-                    imagePreview.style.display = 'block';
-                };
-            
-            // ファイルをData URL (Base64) として読み込む
-                reader.readAsDataURL(file);
-            } else {
-            // ファイル選択がキャンセルされた場合、プレビューを非表示にする
-                imagePreview.src = '';
-                imagePreview.style.display = 'none';
-            }
-        });
-
-        // カメラ関連の要素取得
-        const openCameraBtn = document.getElementById('openCameraBtn');
-        const cameraArea = document.getElementById('cameraArea');
-        const cameraVideo = document.getElementById('cameraVideo');
-        const takePhotoBtn = document.getElementById('takePhotoBtn');
-
-        let cameraStream = null;
-
-        // ① 「撮影」ボタンを押してカメラ起動
-        openCameraBtn.addEventListener('click', async () => {
-            try {
-                cameraStream = await navigator.mediaDevices.getUserMedia({ video: true });
-                cameraVideo.srcObject = cameraStream;
-
-                cameraArea.style.display = "block";
-                imagePreview.style.display = "none"; // プレビュー非表示
-            } catch (err) {
-                alert("カメラを起動できませんでした: " + err);
-            }
-        });
-
-        // ② 「写真を撮る」で現在のカメラ映像をキャプチャ
-        takePhotoBtn.addEventListener('click', () => {
-            if (!cameraStream) return;
-
-            const canvas = document.createElement('canvas');
-            canvas.width = cameraVideo.videoWidth;
-            canvas.height = cameraVideo.videoHeight;
-
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(cameraVideo, 0, 0, canvas.width, canvas.height);
-
-            // 画像データを Base64 に変換
-            const dataUrl = canvas.toDataURL("image/jpeg");
-
-            // プレビュー表示
-            imagePreview.src = dataUrl;
-            imagePreview.style.display = "block";
-
-            // Base64 を <input type="file"> に変換してセット
-            fetch(dataUrl)
-                .then(res => res.arrayBuffer())
-                .then(buffer => {
-                    const file = new File([buffer], "camera.jpg", { type: "image/jpeg" });
-            
-                    const dt = new DataTransfer();
-                    dt.items.add(file);
-
-                    imageInput.files = dt.files;  // Flask に送れる！
-                });
-
-            // カメラ停止
-            cameraStream.getTracks().forEach(track => track.stop());
-            cameraArea.style.display = "none";
-        });
-    </script>
+    <script src="{{ url_for('static', filename='js/saiten.js') }}"></script>
 </body>
 </html>
+
 
 
 
