@@ -160,10 +160,12 @@ button[type="submit"]:hover {
     border-left: 5px solid var(--primary-blue);
     padding-left: 1rem;
     margin-top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .res-head .score {
-    text-align: center;
 }
 
 .res-body {
@@ -221,6 +223,7 @@ button[type="submit"]:hover {
     border: 3px dashed #9ca3af;
     border-radius: 0.5rem;
 }
+
 
 
 
