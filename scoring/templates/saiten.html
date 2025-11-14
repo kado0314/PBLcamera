@@ -12,7 +12,13 @@
         
         <label>画像をアップロード</label><br>
         <input type="file" name="image_file" accept="image/*" capture="camera" id="imageInput"><br>
-        <img id="imagePreview" src="" style="max-width:300px; display: none; margin-bottom: 10px;"><br>
+        
+        <button type="button" id="openCameraBtn">撮影</button><br>
+        <div id="cameraArea">
+            <video id="cameraVideo" autoplay playsinline></video>
+            <button type="button" id="takePhotoBtn">写真を撮る</button>
+        </div>
+        <img id="imagePreview" src="">
 
         <label for="user_gender">性別</label><br>
         <select name="user_gender" id="user_gender">
@@ -92,8 +98,65 @@
                 imagePreview.style.display = 'none';
             }
         });
+
+        // カメラ関連の要素取得
+        const openCameraBtn = document.getElementById('openCameraBtn');
+        const cameraArea = document.getElementById('cameraArea');
+        const cameraVideo = document.getElementById('cameraVideo');
+        const takePhotoBtn = document.getElementById('takePhotoBtn');
+
+        let cameraStream = null;
+
+        // ① 「撮影」ボタンを押してカメラ起動
+        openCameraBtn.addEventListener('click', async () => {
+            try {
+                cameraStream = await navigator.mediaDevices.getUserMedia({ video: true });
+                cameraVideo.srcObject = cameraStream;
+
+                cameraArea.style.display = "block";
+                imagePreview.style.display = "none"; // プレビュー非表示
+            } catch (err) {
+                alert("カメラを起動できませんでした: " + err);
+            }
+        });
+
+        // ② 「写真を撮る」で現在のカメラ映像をキャプチャ
+        takePhotoBtn.addEventListener('click', () => {
+            if (!cameraStream) return;
+
+            const canvas = document.createElement('canvas');
+            canvas.width = cameraVideo.videoWidth;
+            canvas.height = cameraVideo.videoHeight;
+
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(cameraVideo, 0, 0, canvas.width, canvas.height);
+
+            // 画像データを Base64 に変換
+            const dataUrl = canvas.toDataURL("image/jpeg");
+
+            // プレビュー表示
+            imagePreview.src = dataUrl;
+            imagePreview.style.display = "block";
+
+            // Base64 を <input type="file"> に変換してセット
+            fetch(dataUrl)
+                .then(res => res.arrayBuffer())
+                .then(buffer => {
+                    const file = new File([buffer], "camera.jpg", { type: "image/jpeg" });
+            
+                    const dt = new DataTransfer();
+                    dt.items.add(file);
+
+                    imageInput.files = dt.files;  // Flask に送れる！
+                });
+
+            // カメラ停止
+            cameraStream.getTracks().forEach(track => track.stop());
+            cameraArea.style.display = "none";
+        });
     </script>
 </body>
 </html>
+
 
 
