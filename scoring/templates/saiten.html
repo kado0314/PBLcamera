@@ -11,8 +11,7 @@
     <form method="POST" enctype="multipart/form-data" action="{{ url_for('scoring.saiten') }}">
         
         <label>画像をアップロード</label><br>
-        <input type="file" name="image_file" accept="image/*" capture="camera" id="imageInput"><br><br>
-
+        <input type="file" name="image_file" accept="image/*" capture="camera" id="imageInput"><br>
         <img id="imagePreview" src="" style="max-width:300px; display: none; margin-bottom: 10px;"><br>
 
         <label for="user_gender">性別</label><br>
@@ -96,3 +95,4 @@
     </script>
 </body>
 </html>
+
