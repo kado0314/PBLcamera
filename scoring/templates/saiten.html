@@ -45,7 +45,7 @@
     {% if score is not none %}
     <hr>
     <div class="results">
-        <div class="res-head"><h2>採点結果    {{ score }} 点</h2></div>
+        <div class="res-head"><h2>採点結果<span class="score">{{ score }} 点</h2></div>
         <div class="res-body">
             <div class="rating">
                 <p>{{ recommendation }}</p>
@@ -96,12 +96,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
