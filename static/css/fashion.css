@@ -110,7 +110,13 @@ button[type="submit"]:hover {
     transform: scale(1.02);
 }
 
-/* ===== 採点結果セクション ===== */
+#imagePreview {
+    max-width:300px;
+    display: none;
+    margin-bottom: 10px;
+}
+
+/* ===== 採点結果 ===== */
 
 /* 採点対象 */
 .target {
@@ -223,6 +229,7 @@ button[type="submit"]:hover {
     border: 3px dashed #9ca3af;
     border-radius: 0.5rem;
 }
+
 
 
 
