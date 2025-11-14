@@ -116,6 +116,29 @@ button[type="submit"]:hover {
     margin-bottom: 10px;
 }
 
+#cameraArea {
+    display: none;
+    margin-bottom: 10px;
+}
+
+#cameraVideo {
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+#takePhotoBtn {
+    padding: 6px 12px;
+    margin-bottom: 10px;
+}
+
+#imagePreview {
+    max-width: 300px;
+    display: none;
+    margin-bottom: 10px;
+}
+
 /* ===== 採点結果 ===== */
 
 /* 採点対象 */
@@ -229,6 +252,7 @@ button[type="submit"]:hover {
     border: 3px dashed #9ca3af;
     border-radius: 0.5rem;
 }
+
 
 
 
