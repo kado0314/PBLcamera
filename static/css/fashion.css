@@ -183,18 +183,23 @@ button[type="submit"]:hover {
 }
 
 .res-head h2 {
-    font-size: 2rem;
-    font-weight: 800;
     color: var(--primary-blue);
-    border-left: 5px solid var(--primary-blue);
-    padding-left: 1rem;
     margin-top: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
+.res-head .label {
+    border-left: 5px solid var(--primary-blue);
+    padding-left: 1rem;
+    font-size: 2rem;
+}
+
 .res-head .score {
+    margin: 0 auto;
+    font-size: 2.3rem;
+    font-weight: 800;
 }
 
 .res-body {
@@ -252,6 +257,7 @@ button[type="submit"]:hover {
     border: 3px dashed #9ca3af;
     border-radius: 0.5rem;
 }
+
 
 
 
