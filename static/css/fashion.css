@@ -198,9 +198,11 @@ button[type="submit"]:hover {
 }
 
 .res-head .score {
-    margin: 0 auto;
     font-size: 2.5rem;
     font-weight: 800;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .res-body {
@@ -258,3 +260,4 @@ button[type="submit"]:hover {
     border: 3px dashed #9ca3af;
     border-radius: 0.5rem;
 }
+
