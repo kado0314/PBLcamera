@@ -187,13 +187,14 @@ button[type="submit"]:hover {
     margin-top: 0;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .res-head .label {
     border-left: 5px solid var(--primary-blue);
     padding-left: 1rem;
     font-size: 2rem;
+    line-height: 1.2;
 }
 
 .res-head .score {
@@ -257,6 +258,7 @@ button[type="submit"]:hover {
     border: 3px dashed #9ca3af;
     border-radius: 0.5rem;
 }
+
 
 
 
