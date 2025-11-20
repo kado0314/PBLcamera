@@ -20,7 +20,7 @@
     /* ロゴを中央に寄せるためのFlexbox */
     display: flex;
     justify-content: center; /* 水平中央寄せ */
-    align-items: center;     /* 垂直中央寄せ */
+    align-items: center;      /* 垂直中央寄せ */
     
     /* ★修正点2: border-bottom-colorのみを遷移対象に追加 */
     transition: background-color 0.3s, border-bottom-color 0.3s; 
@@ -65,13 +65,13 @@
 
 
 /* ==============================
-   全体レイアウト：中央配置
+   全体レイアウト：中央配置 (PC/スマホ共通)
    ============================== */
 body {
     /* ページ全体で中央揃えを実現するための設定 */
     display: flex;
     flex-direction: column; 
-    align-items: center; 
+    align-items: center; /* コンテンツ（H1やボタン群全体）を中央寄せ */
     min-height: 100vh; 
     margin: 0; 
     
@@ -83,8 +83,8 @@ body {
     
     /* ★修正点: 画像背景設定 */
     background-image: url('https://github.com/kado0314/PBLcamera/blob/main/static/image/p820.jpg?raw=true'); /* 画像ファイルのパスを指定 */
-    background-size: cover;                        /* 画像が画面全体を覆うように設定 */
-    background-attachment: fixed;                  /* 画像がスクロールしても固定されるように設定 */
+    background-size: cover;                      /* 画像が画面全体を覆うように設定 */
+    background-attachment: fixed;                    /* 画像がスクロールしても固定されるように設定 */
     background-color: #f0f0f0;                      /* 画像が読み込まれない場合の代替背景色 */
 }
 
@@ -102,24 +102,34 @@ h1 {
     letter-spacing: 0.05em; 
 }
 
+
 /* ==============================
-   aタグ（青・緑の枠線の親要素）のスタイル
+   aタグ（ボタンの親要素）のスタイル
    ============================== */
 a {
     /* Flexboxで中身（ボタンとpタグ）を中央揃えにする */
     display: flex;
     flex-direction: column; 
-    align-items: center;    
-    width: 360px; 
+    align-items: center; 
     
-    /* HTMLのインラインスタイルにある枠線とパディングをそのまま利用 */
+    /* PC/タブレットのレイアウト（デフォルト） */
+    width: 360px; /* ★PC: 幅を固定 */
+    margin: 0 15px 30px 15px; /* ★PC: ボタン同士の左右と下部の間隔 */
+    
     border-radius: 15px; 
     box-shadow: none;
-    
     background-color: rgba(255, 255, 255, 0.2); 
-
     text-decoration: none; 
     color: inherit; 
+}
+
+/* ★スマートフォン用のスタイル (画面幅 767px 以下) */
+@media (max-width: 767px) {
+    a {
+        /* 画面いっぱいに広げ、縦に並ぶように調整 */
+        width: 90%; /* ★スマホ: 画面幅の90%に広げ、縦に並ぶ */
+        margin: 0 auto 30px auto; /* ★スマホ: 左右のマージンを auto で中央寄せ、下部に間隔 */
+    }
 }
 
 
@@ -128,7 +138,7 @@ a {
    ============================== */
 a button {
     /* サイズ設定 */
-    width: 330px; 
+    width: 90%; /* ★修正: 親要素(aタグ)の幅に合わせるよう調整 */
     height: 80px; 
     padding: 15px; 
     
@@ -148,6 +158,14 @@ a button {
 
     cursor: pointer;
     transition: background-color 0.3s, box-shadow 0.1s; 
+}
+
+/* ★スマートフォン用のボタンサイズ調整 (任意) */
+@media (max-width: 767px) {
+    a button {
+        height: 60px; /* スマホではボタンを少し小さくするなどの調整 */
+        font-size: 1.2em;
+    }
 }
 
 /* ホバー時のエフェクト */
@@ -170,7 +188,6 @@ a p {
     /* 説明文のテキスト自体は左寄せ */
     text-align: middle; 
     
-    /* 幅の固定 (width: 360px;) は引き続き削除したまま */
     width: 320px;
 
     margin-top: 15px; 
