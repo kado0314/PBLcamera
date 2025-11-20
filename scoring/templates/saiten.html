@@ -2,12 +2,42 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ファッション採点</title>
     <link rel="stylesheet" href="../../static/css/fashion.css">
     <link rel="icon" href="https://github.com/kado0314/PBLcamera/blob/main/static/image/huku.png?raw=true" type="image/png">
 </head>
 <body>
+    <div class="hamburger-menu" id="hamburgerMenu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <nav class="sidebar" id="sidebar">
+        <ul>
+            <li>
+                <a href="https://kado0314.github.io/PBLcamera/">
+                    <img src="../../static/image/homeaikon.png" alt="ホーム">
+                    <span>ホーム</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://kado0314.github.io/PBLcamera/Typamera/templates/typing.html">
+                    <img src="../../static/image/kibodoaikon.png" alt="タイピング">
+                    <span>タイピング</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://pblcamera.onrender.com/scoring/">
+                    <img src="../../static/image/kansikameraaikon.png" alt="プライバシーガード">
+                    <span>プライバシー<br>ガード</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
     <h1>ファッション採点</h1>
+    
     <form method="POST" enctype="multipart/form-data" action="{{ url_for('scoring.saiten') }}">
         
         <label>画像をアップロード</label><br>
@@ -60,15 +90,26 @@
                     {% endfor %}
                 </ul>
             </div>
-            {% endif %}
+            
             {% if radar_chart_data %}
             <div class="chart">
                 <img src="{{ radar_chart_data }}" alt="レーダーチャート">
             </div>
+            {% endif %}
         </div>
     </div>
     {% endif %}
+    
     <script src="{{ url_for('static', filename='js/saiten.js') }}"></script>
+
+    <script>
+        const hamburger = document.getElementById('hamburgerMenu');
+        const sidebar = document.getElementById('sidebar');
+
+        hamburger.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+            hamburger.classList.toggle('open');
+        });
+    </script>
 </body>
 </html>
-
