@@ -16,6 +16,7 @@ class FashionScorer:
     def __init__(self, user_gender: str = "neutral", user_locale: str = "ja-JP"):
         self.user_gender = user_gender
         self.user_locale = user_locale
+        
         # Gemini API モデルのロード
         genai.configure(api_key=os.environ.get("GOOGLE_API_KEY"))
         self.model = genai.GenerativeModel("gemini-2.0-flash")
@@ -26,7 +27,7 @@ class FashionScorer:
             img_bytes = base64.b64decode(image_base64)
             image = Image.open(io.BytesIO(img_bytes))
 
-            # JPEGバイト列に変換
+            # 強制 JPEG 変換
             img_io = io.BytesIO()
             image.save(img_io, format="JPEG")
             return img_io.getvalue()
@@ -34,15 +35,15 @@ class FashionScorer:
             return None
 
     def analyze(self, image_base64: str, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        response = self.model.generate_content([
-            prompt,
-            {"mime_type": "image/jpeg", "data": img_bytes}
-        ])
+        # 1. 画像をJPEGバイト列としてロード
+        img_bytes = self.load_image(image_base64)
+        if img_bytes is None:
+            return {"error": "Invalid image data."}
 
         user_gender = metadata.get("user_gender", self.user_gender)
         intended_scene = metadata.get("intended_scene", "friends")
 
-        # 2. プロンプト
+        # 2. プロンプト作成（先に定義する）
         prompt = f"""
         あなたはプロのファッションスタイリストです。以下の画像を分析し、採点してください。
         ユーザー属性: {user_gender}, 想定シーン: {intended_scene}
@@ -61,15 +62,22 @@ class FashionScorer:
         }}
         """
 
-        # 3. Gemini 推論
+        # 3. Gemini 推論（正しい image 引数を使用）
         try:
-            response = self.model.generate_content([prompt, image])
+            response = self.model.generate_content(
+                [
+                    prompt,
+                    {"mime_type": "image/jpeg", "data": img_bytes}
+                ]
+            )
+
             result_text = response.candidates[0].content[0].text
             result = json.loads(result_text)
+
         except Exception as e:
             return {"error": f"Gemini API error: {e}"}
 
-        # 4. 結果を上位と揃えたフォーマットに加工
+        # 4. 結果を上位形式に整形
         output = {
             "overall_score": result.get("total_score", 0),
             "subscores": result.get("details", {}),
