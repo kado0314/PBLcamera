@@ -4,9 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>カメラ・タイピングゲーム</title>
+    
+    <link rel="icon" href="../../static/image/kibodoaikon.png">
+    
     <link rel="stylesheet" href="../../static/css/typing.css">
 </head>
 <body>
+    <div class="hamburger-menu" id="hamburgerMenu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <nav class="sidebar" id="sidebar">
+        <ul>
+            <li>
+                <a href="https://kado0314.github.io/PBLcamera/">
+                    <img src="../../static/image/kansikameraaikon.png" alt="ホーム">
+                    <span>ホーム</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://kado0314.github.io/PBLcamera/Typamera/templates/typing.html">
+                    <img src="../../static/image/2_1120100308.png" alt="タイピング">
+                    <span>タイピング</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://pblcamera.onrender.com/scoring/">
+                    <img src="../../static/image/fassyonaikon.png" alt="ファッション採点">
+                    <span>ファッション採点</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
     <div class="container">
         <h1>カメラ・タイピングチャレンジ</h1>
         <p>カメラに映っている物をタイピングしましょう！ (英語入力)</p>
@@ -48,5 +79,15 @@
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
     
     <script src="../script.js"></script>
+
+    <script>
+        const hamburger = document.getElementById('hamburgerMenu');
+        const sidebar = document.getElementById('sidebar');
+
+        hamburger.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+            hamburger.classList.toggle('open');
+        });
+    </script>
 </body>
 </html>
