@@ -1,6 +1,6 @@
 /* ==============================
-   追加: ナビゲーションヘッダーのスタイル
-   ============================== */
+    追加: ナビゲーションヘッダーのスタイル
+    ============================== */
 .main-header {
     /* 画面最上部に固定 */
     position: fixed;
@@ -12,35 +12,54 @@
     /* 初期状態は背景色を透明に設定 */
     background-color: transparent; 
     
-    /* ★修正点1: 線の太さ(1px)は維持し、色を完全に透明に設定 (黒い線問題を解消) */
+    /* 線の太さ(1px)は維持し、色を完全に透明に設定 (黒い線問題を解消) */
     border-bottom: 1px solid transparent; 
     
+    /* PC: 80px, スマホ: 60px に調整 */
     height: 80px; 
     
     /* ロゴを中央に寄せるためのFlexbox */
     display: flex;
     justify-content: center; /* 水平中央寄せ */
-    align-items: center;     /* 垂直中央寄せ */
+    align-items: center;      /* 垂直中央寄せ */
     
-    /* ★修正点2: border-bottom-colorのみを遷移対象に追加 */
+    /* border-bottom-colorのみを遷移対象に追加 */
     transition: background-color 0.3s, border-bottom-color 0.3s; 
     
     /* Soéju風フォント */
     font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
 }
 
+/* 💻 PC用スタイル (画面幅が768px以上の場合) */
+@media (min-width: 768px) {
+    .main-header {
+        height: 80px; /* PCでの高さ */
+    }
+}
+
+/* 📱 スマホ用スタイル (画面幅が767px以下の場合) */
+@media (max-width: 767px) {
+    .main-header {
+        height: 60px; /* スマホでの高さに調整 */
+    }
+}
+
 /* ホバー時に白色にするエフェクト */
 .main-header:hover {
     background-color: #ffffff;
     
-    /* ★修正点3: ホバー時に線の色だけを薄いグレーに変更 */
+    /* ホバー時に線の色だけを薄いグレーに変更 */
     border-bottom-color: #f0f0f0;
 }
 
 .header-content {
     /* HTMLのdiv要素は中央寄せのため、Flexboxを解除 */
     display: block; 
+    
+    /* PCでは最大幅を設定し、スマホでは100%幅を利用 */
     max-width: 1200px;
+    width: 90%; /* スマホ対応: 画面幅の90%を使用し、左右に余白を持たせる */
+    
     margin: 0 auto;
 }
 
@@ -50,13 +69,24 @@
     font-weight: bold;
     letter-spacing: 0.15em; 
     
-    /* ★初期状態の透明な背景で見えるように文字色を白に */
+    /* 初期状態の透明な背景で見えるように文字色を白に */
     color: #ffffff; 
-    line-height: 60px; 
+    
+    /* ヘッダーの高さに合わせてline-heightを調整 */
+    line-height: 80px; /* PCに合わせる */
     
     /* グラデーションホバー時は白ではなく濃い色にするための設定 */
     transition: color 0.3s;
 }
+
+/* 📱 スマホ用スタイル: ロゴの調整 */
+@media (max-width: 767px) {
+    .logo {
+        font-size: 1.5em; /* スマホで少し小さく */
+        line-height: 60px; /* スマホのヘッダーの高さに合わせる */
+    }
+}
+
 
 /* ヘッダーホバー時にロゴの文字色を濃い色にするエフェクト */
 .main-header:hover .logo {
@@ -65,8 +95,8 @@
 
 
 /* ==============================
-   全体レイアウト：中央配置
-   ============================== */
+    全体レイアウト：中央配置
+    ============================== */
 body {
     /* ページ全体で中央揃えを実現するための設定 */
     display: flex;
@@ -75,41 +105,60 @@ body {
     min-height: 100vh; 
     margin: 0; 
     
-    /* ヘッダーの高さ分だけコンテンツを下にずらす */
-    padding-top: 60px; 
+    /* ヘッダーの高さ分だけコンテンツを下にずらす（PC: 80px, スマホ: 60px に対応） */
+    padding-top: 80px; 
     
     /* Soéju風: フォントを明朝体（セリフ）に変更 */
     font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif; 
     
-    /* ★修正点: 画像背景設定 */
-    background-image: url('https://github.com/kado0314/PBLcamera/blob/main/static/image/p820.jpg?raw=true'); /* 画像ファイルのパスを指定 */
-    background-size: cover;                        /* 画像が画面全体を覆うように設定 */
-    background-attachment: fixed;                  /* 画像がスクロールしても固定されるように設定 */
-    background-color: #f0f0f0;                      /* 画像が読み込まれない場合の代替背景色 */
+    /* 画像背景設定 */
+    background-image: url('https://github.com/kado0314/PBLcamera/blob/main/static/image/p820.jpg?raw=true');
+    background-size: cover;
+    background-attachment: fixed;
+    background-color: #f0f0f0;
+}
+
+/* 📱 スマホ用スタイル: bodyのpadding-topを調整 */
+@media (max-width: 767px) {
+    body {
+        padding-top: 60px; /* スマホのヘッダーの高さに合わせる */
+    }
 }
 
 h1 {
     /* タイトル位置と間隔の調整 */
-    margin-top: 45px; /* ヘッダーのpadding-topを考慮した調整 */
+    margin-top: 45px; 
     margin-bottom: 80px; 
     
-    /* タイトル文字色を白（#ffffff）に変更 */
+    /* タイトル文字色 */
     color: #808080; 
     
     /* Soéju風: タイトルを大きく、フォントを細く */
     font-size: 2.5em; 
     font-weight: normal; 
     letter-spacing: 0.05em; 
+    text-align: center; /* 中央寄せを確実にする */
 }
 
+/* 📱 スマホ用スタイル: h1の調整 */
+@media (max-width: 767px) {
+    h1 {
+        font-size: 1.8em; /* スマホでタイトルを小さく */
+        margin-bottom: 40px; /* スマホで間隔を詰める */
+    }
+}
+
+
 /* ==============================
-   aタグ（青・緑の枠線の親要素）のスタイル
-   ============================== */
+    aタグ（青・緑の枠線の親要素）のスタイル
+    ============================== */
 a {
     /* Flexboxで中身（ボタンとpタグ）を中央揃えにする */
     display: flex;
     flex-direction: column; 
-    align-items: center;    
+    align-items: center;     
+    
+    /* PC: 360px, スマホ: 90%幅に調整 */
     width: 360px; 
     
     /* HTMLのインラインスタイルにある枠線とパディングをそのまま利用 */
@@ -120,12 +169,21 @@ a {
 
     text-decoration: none; 
     color: inherit; 
+    
+    margin: 15px auto; /* 複数のaタグが並んだときに上下に余白を設ける */
+}
+
+/* 📱 スマホ用スタイル: aタグの調整 */
+@media (max-width: 767px) {
+    a {
+        width: 90%; /* スマホでは画面幅の90%を使用 */
+    }
 }
 
 
 /* ==============================
-   ボタンのスタイル：大型化と統一
-   ============================== */
+    ボタンのスタイル：大型化と統一
+    ============================== */
 a button {
     /* サイズ設定 */
     width: 330px; 
@@ -150,6 +208,15 @@ a button {
     transition: background-color 0.3s, box-shadow 0.1s; 
 }
 
+/* 📱 スマホ用スタイル: ボタンの調整 */
+@media (max-width: 767px) {
+    a button {
+        width: 90%; /* 親要素(aタグ)の90%に設定 (約324px程度) */
+        height: 65px; /* スマホでボタンの高さを少し下げる */
+        font-size: 1.3em; /* スマホで文字を小さく */
+    }
+}
+
 /* ホバー時のエフェクト */
 a button:hover {
     background-color: #f5f5f5; /* ボタンが薄くハイライトされる */
@@ -162,13 +229,12 @@ a button:active {
 }
 
 
-
 /* ==============================
-   説明文（pタグ）のスタイル修正
-   ============================== */
+    説明文（pタグ）のスタイル修正
+    ============================== */
 a p {
-    /* 説明文のテキスト自体は左寄せ */
-    text-align: middle; 
+    /* 説明文のテキスト自体は中央寄せに近い状態を維持 */
+    text-align: left; /* 左寄せに戻す */
     
     /* 幅の固定 (width: 360px;) は引き続き削除したまま */
     width: 320px;
@@ -176,7 +242,7 @@ a p {
     margin-top: 15px; 
     margin-bottom: 0;
     
-    /* ★修正点1: 左にずらして青い枠線の左端に揃える */
+    /* 左にずらしてボタンの左端に揃える */
     margin-left: -15px; 
     
     /* 文字色を濃い色 (#333) に戻す */
@@ -191,8 +257,31 @@ a p {
     
     font-weight: bold; 
     
-    /* ★修正点2: 文字の大きさを小さくして改行を防ぐ */
-    font-size: 0.9em; /* 1emが基準。0.9emは10%縮小 */
-    /* これでも改行する場合は 0.8em などにさらに小さくしてください。 */
+    /* 文字の大きさを小さくして改行を防ぐ */
+    font-size: 0.9em;
 }
 
+/* 📱 スマホ用スタイル: pタグの調整 */
+@media (max-width: 767px) {
+    a p {
+        width: calc(90% - 10px); /* aタグの幅(90%)から左右padding(5px*2)を引いた幅 */
+        
+        /* スマホでは左寄せの位置を調整 */
+        margin-left: 0; /* 左へのネガティブマージンを解除 */
+        
+        /* aタグのpaddingを使って調整 */
+        padding-left: 5px; /* 左端に寄せるための調整 */
+        padding-right: 5px;
+        
+        /* 文字の大きさをさらに小さくする */
+        font-size: 0.85em; 
+        
+        /* ブロック要素として中央配置に近い形に戻す */
+        display: block; 
+        text-align: center;
+        margin-bottom: 10px; /* 下に余白を追加 */
+        
+        /* aタグのpaddingを使って調整 */
+        padding: 5px; 
+    }
+}
