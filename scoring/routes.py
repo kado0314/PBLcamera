@@ -78,7 +78,7 @@ def saiten():
         "saiten.html",
         uploaded_image_data=f"data:image/png;base64,{image_data}",
         score=result.get("overall_score", "N/A"),
-        recommendation="あなたのコーディネートをさらに引き立てるポイントがあります！",
+        recommendation=result.get("recommendation", ""),
         feedback=result.get("explanations", ["詳細な説明はありません。"]),
         radar_chart_data=radar_chart_data,
         # ▼▼▼ 修正: 採点結果とともに、フォームの選択状態を維持する ▼▼▼
