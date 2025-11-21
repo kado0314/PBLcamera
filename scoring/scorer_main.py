@@ -67,10 +67,10 @@ class FashionScorer:
             "recommendation": "(一言コメント)",
             "feedback_points": ["(良い点・改善点1)", "(良い点・改善点2)", "(良い点・改善点3)"],
             "details": {{
-                "color_harmony": (0-20), "fit_and_silhouette": (0-20),
-                "item_coordination": (0-15), "cleanliness_material": (0-15),
-                "accessories_balance": (0-10), "trendness": (0-10),
-                "tpo_suitability": (0-5), "photogenic_quality": (0-5)
+                "color_harmony": (1-20), "fit_and_silhouette": (1-20),
+                "item_coordination": (1-15), "cleanliness_material": (1-15),
+                "accessories_balance": (1-10), "trendness": (1-10),
+                "tpo_suitability": (1-5), "photogenic_quality": (1-5)
             }}
         }}
         """
@@ -99,5 +99,6 @@ class FashionScorer:
         }
 
         return output
+
 
 
