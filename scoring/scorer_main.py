@@ -8,18 +8,31 @@ import os
 import google.generativeai as genai
 
 class FashionScorer:
-    """
-    ファッション画像の多次元スコアリングを実行するメインクラス
-    """
-    MODEL_VERSION = "v1.2.0"
-
     def __init__(self, user_gender: str = "neutral", user_locale: str = "ja-JP"):
         self.user_gender = user_gender
         self.user_locale = user_locale
         
-        # Gemini API モデルのロード
-        genai.configure(api_key=os.environ.get("GOOGLE_API_KEY"))
-        self.model = genai.GenerativeModel("gemini-2.0-flash")
+        GENAI_API_KEY = os.environ.get('GOOGLE_API_KEY')
+        if not GENAI_API_KEY:
+            print("Warning: GOOGLE_API_KEY is not set.")
+        else:
+            genai.configure(api_key=GENAI_API_KEY)
+        # ★ここで最新モデルを指定します
+        MODEL_NAME = "gemini-2.0-flash"
+        generation_config = {
+            "temperature": 1,
+            "response_mime_type": "application/json",
+        }
+        # 安全のためAPIキーがある場合のみモデル初期化
+        model = None
+        if GENAI_API_KEY:
+            try:
+                model = genai.GenerativeModel(
+                    model_name=MODEL_NAME,
+                    generation_config=generation_config,
+                )
+            except Exception as e:
+                print(f"Model initialization error: {e}")
 
     def load_image(self, image_base64: str) -> bytes | None:
         """Base64文字列からJPEGバイト列に変換して返す"""
@@ -86,3 +99,4 @@ class FashionScorer:
         }
 
         return output
+
