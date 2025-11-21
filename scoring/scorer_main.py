@@ -27,17 +27,17 @@ class FashionScorer:
             img_bytes = base64.b64decode(image_base64)
             image = Image.open(io.BytesIO(img_bytes))
 
-            # 強制 JPEG 変換
+            # 強制 PNG 変換
             img_io = io.BytesIO()
-            image.save(img_io, format="JPEG")
-            return img_io.getvalue()
+            image.save(img_io, format="PNG")
+            return image
         except Exception:
             return None
 
     def analyze(self, image_base64: str, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        # 1. 画像をJPEGバイト列としてロード
-        img_bytes = self.load_image(image_base64)
-        if img_bytes is None:
+        # 1. 画像をPNGとしてロード
+        img = self.load_image(image_base64)
+        if img is None:
             return {"error": "Invalid image data."}
 
         user_gender = metadata.get("user_gender", self.user_gender)
@@ -64,15 +64,8 @@ class FashionScorer:
 
         # 3. Gemini 推論（正しい image 引数を使用）
         try:
-            response = self.model.generate_content(
-                [
-                    prompt,
-                    {"mime_type": "image/jpeg", "data": img_bytes}
-                ]
-            )
-
-            result_text = response.candidates[0].content[0].text
-            result = json.loads(result_text)
+            response = model.generate_content([prompt, img])
+            result = json.loads(response.text)
 
         except Exception as e:
             return {"error": f"Gemini API error: {e}"}
@@ -80,6 +73,7 @@ class FashionScorer:
         # 4. 結果を上位形式に整形
         output = {
             "overall_score": result.get("total_score", 0),
+            "recommendation": result.get("recommendation", ""),
             "subscores": result.get("details", {}),
             "explanations": result.get("feedback_points", []),
             "warnings": [],
