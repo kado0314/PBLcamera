@@ -4,12 +4,12 @@
 SCORE_WEIGHTS = {
     "color_harmony": 20.0,
     "fit_and_silhouette": 20.0,
-    "item_coordination": 15.0,
-    "cleanliness_material": 15.0,
-    "accessories_balance": 10.0,
-    "trendness": 10.0,
-    "tpo_suitability": 5.0,
-    "photogenic_quality": 5.0
+    "item_coordination": 20.0,
+    "cleanliness_material": 20.0,
+    "accessories_balance": 20.0,
+    "trendness": 20.0,
+    "tpo_suitability": 20.0,
+    "photogenic_quality": 20.0
 }
 
 # 評価バイアスの調整例（fit_and_silhouetteで利用）
@@ -37,3 +37,4 @@ TPO_RULES = {
     "friends": {"forbidden_patterns": [], "min_cleanliness": 0.5} # 特に禁止事項なし、清潔感の基準も少し緩め
     # ▲▲▲ 修正 ▲▲▲
 }
+
