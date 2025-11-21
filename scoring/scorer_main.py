@@ -24,10 +24,10 @@ class FashionScorer:
             "response_mime_type": "application/json",
         }
         # 安全のためAPIキーがある場合のみモデル初期化
-        model = None
+        self.model = None
         if GENAI_API_KEY:
             try:
-                model = genai.GenerativeModel(
+                self.model = genai.GenerativeModel(
                     model_name=MODEL_NAME,
                     generation_config=generation_config,
                 )
@@ -77,7 +77,7 @@ class FashionScorer:
 
         # 3. Gemini 推論（正しい image 引数を使用）
         try:
-            response = model.generate_content([prompt, img])
+            response = self.model.generate_content([prompt, img])
             result = json.loads(response.text)
 
         except Exception as e:
@@ -99,4 +99,5 @@ class FashionScorer:
         }
 
         return output
+
 
