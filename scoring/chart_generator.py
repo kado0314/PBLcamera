@@ -43,7 +43,7 @@ def generate_radar_chart(aspect_scores):
 
     # ======== 自動スケール調整（項目ごとの満点に合わせる） ========
     max_values = [SCORE_WEIGHTS.get(key, 10.0) for key in aspect_scores.keys()]  # 各項目の最大値
-    normalized_values = [v / m * 100 for v, m in zip(values, max_values)]  # 各項目を0〜100で正規化
+    normalized_values = [v / m * 20 for v, m in zip(values, max_values)]  # 各項目を0〜100で正規化
 
     # ======== レーダーチャート設定 ========
     num_vars = len(labels)
@@ -54,10 +54,12 @@ def generate_radar_chart(aspect_scores):
     fig, ax = plt.subplots(figsize=(6, 6), subplot_kw=dict(polar=True))
     ax.plot(angles, normalized_values, color='blue', linewidth=2)
     ax.fill(angles, normalized_values, color='skyblue', alpha=0.25)
+    for angle, value in zip(angles[:-1], normalized_values[:-1]):
+        ax.text(angle, value + 1, f"{value:.1f}", fontsize=9, ha='center', va='center')
     ax.set_xticks(angles[:-1])
     ax.set_xticklabels(labels, fontsize=10)
     ax.set_yticklabels([])
-    ax.set_ylim(0, 100)
+    ax.set_ylim(0, 20)
     ax.set_title("ファッション採点レーダーチャート（各項目の満点にスケール）", fontsize=13, pad=20)
 
     # ======== Base64変換 ========
