@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>カメラアプリ選択</title>
+    <link rel="stylesheet" href="./static/css/style.css">
+    <link rel="icon" href="https://github.com/kado0314/PBLcamera/blob/main/static/image/camera.png?raw=true" type="image/png">
+</head>
+<body>
+    <div class="main-header">
+        <div class="header-content">
+            <div class="logo">CAMERAPP</div> </div>
+    </div>
+    <h1>起動する機能を選択してください</h1>
+    <div style="display: flex; gap: 20px;">
+        <a style="padding: 15px; border: 1px solid blue;">
+            <button onclick="location.href='{{ url_for('scoring.saiten') }}'">ファッション採点</button>
+            <p>画像から服装を分析し、点数とアドバイスを表示します。</p>
+        </a>
+        <a style="padding: 15px; border: 1px solid green;">
+            <button onclick="location.href='https://kado0314.github.io/sorosoroumakuzikkousitekureyo/'">自動プライバシーガード</button>
+            <p>背後に人が来たら、通知を送信します。</p>
+        </a>
+        <!-- <a style="padding: 15px; border: 1px solid red;">
+            <button onclick="location.href='https://perfect-shot-catcher-jdaaxsmdtukojbmnkzxmfh.streamlit.app/'">ミニチュア効果メーカー</button>
+            <p>ティルトシフト効果を利用できます</p>
+        </a> -->
+        <a style="padding: 15px; border: 1px solid red;">
+            <button onclick="location.href='https://kado0314.github.io/PBLcamera/Typamera/templates/typing.html'">タイプカメラ</button>
+            <p>カメラに映ったものでタイピングできます。</p>
+        </a>
+    </div>
+</body>
+</html>
